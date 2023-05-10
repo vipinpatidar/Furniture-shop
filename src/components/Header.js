@@ -53,76 +53,78 @@ const Header = () => {
   };
 
   return (
-    <div
-      className={`fixed left-0 w-full z-50 transition-all duration-300 ${upDown}`}
-    >
-      <header
-        className={`${
-          bg ? "bg-primary py-5 lg:py-5" : "bg-none py-6"
-        }  transition-all duration-300`}
+    <>
+      <div
+        className={`fixed left-0 w-full z-50 transition-all duration-300 ${upDown}`}
       >
-        <div className="container mx-auto lg:px-[50px]">
-          <div className="flex justify-between items-center">
-            {/* logo */}
-            <a href="/">
-              <img className="h-6 lg:h-8" src={logo} alt="logo" />
-            </a>
-            <div className="flex items-center gap-x-5 md:order-1">
-              {/* cart btn */}
-              <CartBtn
-                setIsCartOpen={setIsCartOpen}
-                setMobileNav={setMobileNav}
-              />
-              {/* menu icons switching */}
+        <header
+          className={`${
+            bg ? "bg-primary py-5 lg:py-5" : "bg-none py-6"
+          }  transition-all duration-300`}
+        >
+          <div className="container mx-auto lg:px-[50px]">
+            <div className="flex justify-between items-center">
+              {/* logo */}
+              <a href="/">
+                <img className="h-6 lg:h-8" src={logo} alt="logo" />
+              </a>
+              <div className="flex items-center gap-x-5 md:order-1">
+                {/* cart btn */}
+                <CartBtn
+                  setIsCartOpen={setIsCartOpen}
+                  setMobileNav={setMobileNav}
+                />
+                {/* menu icons switching */}
+                <div
+                  className="text-2xl text-white md:hidden lg:text-3xl order-1"
+                  onClick={() => setMobileNav((prev) => !prev)}
+                >
+                  {mobileNav ? <CgClose /> : <CgMenuRight />}
+                </div>
+              </div>
+              {/* nav */}
+              <nav className="hidden md:flex md:ml-auto md:mr-10">
+                <ul className="md:flex md:gap-x-12 md:items-center">
+                  {navigation.map((item, index) => {
+                    return (
+                      <li key={index}>
+                        <a
+                          className="capitalize text-white hover:border-b transition-all"
+                          href={`#${item.href}`}
+                        >
+                          {item.name}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+
+              {/* cart */}
               <div
-                className="text-2xl text-white md:hidden lg:text-3xl order-1"
-                onClick={() => setMobileNav((prev) => !prev)}
+                className={`${
+                  isCartOpen ? "right-0" : "-right-full"
+                } fixed bottom-0 z-50 top-0  w-full max-w-sm md:max-w-lg h-screen transition-all`}
               >
-                {mobileNav ? <CgClose /> : <CgMenuRight />}
+                <Cart setIsCartOpen={setIsCartOpen} />
               </div>
             </div>
-            {/* nav */}
-            <nav className="hidden md:flex md:ml-auto md:mr-10">
-              <ul className="md:flex md:gap-x-12 md:items-center">
-                {navigation.map((item, index) => {
-                  return (
-                    <li key={index}>
-                      <a
-                        className="capitalize text-white hover:border-b transition-all"
-                        href={`#${item.href}`}
-                      >
-                        {item.name}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            {/* nav for mobile */}
-            <div
-              className={`${
-                mobileNav ? "left-0" : "-left-full"
-              } fixed bottom-0 w-full max-w-xs h-screen transition-all`}
-            >
-              <NavMobile setMobileNav={setMobileNav} />
-            </div>
-            {/* cart */}
-            <div
-              className={`${
-                isCartOpen ? "right-0" : "-right-full"
-              } fixed bottom-0 z-50 top-0  w-full max-w-sm md:max-w-lg h-screen transition-all`}
-            >
-              <Cart setIsCartOpen={setIsCartOpen} />
-            </div>
           </div>
-        </div>
-      </header>
+        </header>
+        <div
+          className={`${bg ? `h-[6px] bg-blue-500` : "hidden"}`}
+          style={{ width: `${getHeight()}%` }}
+        ></div>
+      </div>
+      {/* nav for mobile */}
       <div
-        className={`${bg ? `h-[6px] bg-blue-600` : "hidden"}`}
-        style={{ width: `${getHeight()}%` }}
-      ></div>
-    </div>
+        className={`${
+          mobileNav ? "left-0" : "-left-full"
+        } fixed z-50 bottom-0 w-full max-w-xs h-full transition-all`}
+      >
+        <NavMobile setMobileNav={setMobileNav} />
+      </div>
+    </>
   );
 };
 
