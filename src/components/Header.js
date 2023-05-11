@@ -9,6 +9,7 @@ import { navigation } from "../data";
 import NavMobile from "./NavMobile";
 import CartBtn from "./CartBtn";
 import Cart from "./Cart";
+import { useScrollBlock } from "../hook/StopScroll";
 
 const Header = () => {
   const [bg, setBg] = useState(false);
@@ -16,6 +17,9 @@ const Header = () => {
   const [lastPosition, setLastPosition] = useState(0);
   const [mobileNav, setMobileNav] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  // const [isScrollable, setIsScrollable] = useState(true);
+
+  const [blockScroll, allowScroll] = useScrollBlock();
 
   const isMobileSize = window.innerWidth <= 768;
 
@@ -38,8 +42,8 @@ const Header = () => {
       }
       setLastPosition(window.scrollY);
     };
-
     window.addEventListener("scroll", ShowNavHandler);
+
     return () => window.removeEventListener("scroll", ShowNavHandler);
   }, [lastPosition, isMobileSize]);
 
@@ -51,6 +55,8 @@ const Header = () => {
 
     return (lastPosition / (TotalScrollHight - TotalPageHight)) * 100;
   };
+
+  //stopping scrolling while menu and cart is open
 
   return (
     <>
@@ -73,13 +79,18 @@ const Header = () => {
                 <CartBtn
                   setIsCartOpen={setIsCartOpen}
                   setMobileNav={setMobileNav}
+                  disableScroll={blockScroll}
                 />
                 {/* menu icons switching */}
                 <div
                   className="text-2xl text-white md:hidden lg:text-3xl order-1"
                   onClick={() => setMobileNav((prev) => !prev)}
                 >
-                  {mobileNav ? <CgClose /> : <CgMenuRight />}
+                  {mobileNav ? (
+                    <CgClose onClick={() => allowScroll()} />
+                  ) : (
+                    <CgMenuRight onClick={() => blockScroll()} />
+                  )}
                 </div>
               </div>
               {/* nav */}
@@ -99,15 +110,6 @@ const Header = () => {
                   })}
                 </ul>
               </nav>
-
-              {/* cart */}
-              <div
-                className={`${
-                  isCartOpen ? "right-0" : "-right-full"
-                } fixed bottom-0 z-50 top-0  w-full max-w-sm md:max-w-lg h-screen transition-all`}
-              >
-                <Cart setIsCartOpen={setIsCartOpen} />
-              </div>
             </div>
           </div>
         </header>
@@ -123,6 +125,14 @@ const Header = () => {
         } fixed z-50 bottom-0 w-full max-w-xs h-full transition-all`}
       >
         <NavMobile setMobileNav={setMobileNav} />
+      </div>
+      {/* cart */}
+      <div
+        className={`${
+          isCartOpen ? "right-0" : "-right-full"
+        } fixed bottom-0 z-50 top-0  w-full max-w-sm md:max-w-md h-screen transition-all`}
+      >
+        <Cart setIsCartOpen={setIsCartOpen} enableScroll={allowScroll} />
       </div>
     </>
   );

@@ -21,6 +21,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.conso {
-  color: #04c1b7;
+body::-webkit-scrollbar {
+  display: none;
 }

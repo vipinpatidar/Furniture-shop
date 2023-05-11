@@ -15,17 +15,22 @@ import {
   clearCart,
 } from "../store/cartSlice";
 
-const Cart = ({ setIsCartOpen }) => {
+const Cart = ({ setIsCartOpen, enableScroll }) => {
   const cartItems = useSelector((state) => state.cart.items);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const dispatch = useDispatch();
+
+  const arrowClickHandler = () => {
+    setIsCartOpen(false);
+    enableScroll();
+  };
 
   return (
     <div className="bg-[#1c1c1c] w-full h-full shadow-2xl flex flex-col items-center ">
       <div className=" w-full flex items-center justify-center py-5 border-b border-b-gray-600 relative">
         <MdArrowForwardIos
           className="top-[34%] text-2xl left-7 text-white absolute cursor-pointer"
-          onClick={() => setIsCartOpen(false)}
+          onClick={arrowClickHandler}
         />
         <img className="h-7" src={logo} alt="logo" />
       </div>

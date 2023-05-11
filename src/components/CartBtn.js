@@ -4,12 +4,13 @@ import { BsCart4 } from "react-icons/bs";
 // hooks of redux
 import { useSelector } from "react-redux";
 
-const CartBtn = ({ setIsCartOpen, setMobileNav }) => {
+const CartBtn = ({ setIsCartOpen, setMobileNav, disableScroll }) => {
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const clickHandler = () => {
     setMobileNav(false);
     setIsCartOpen(true);
+    disableScroll();
   };
 
   return (
