@@ -33,7 +33,7 @@ const ProductSlider = () => {
     setTimeout(() => {
       setIsAdded(false);
       setProId(null);
-    }, 500);
+    }, 400);
   };
 
   return (

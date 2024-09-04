@@ -83,7 +83,7 @@ const Header = () => {
                 />
                 {/* menu icons switching */}
                 <div
-                  className="text-2xl text-white md:hidden lg:text-3xl order-1"
+                  className="text-2xl text-white md:hidden lg:text-3xl order-1 cursor-pointer"
                   onClick={() => setMobileNav((prev) => !prev)}
                 >
                   {mobileNav ? (
