@@ -13,7 +13,7 @@ const Newsletter = () => {
             {title}
           </h2>
           <p className="text-xl font-light mb-10">{subtitle}</p>
-          <div className="flex flex-col lg:flex-row gap-[22px]">
+          <div className="flex flex-col lg:flex-row gap-[18px]">
             <input
               className="h-[50px] px-6 outline-none placeholder:text-gray-400 text-gray-600 rounded-lg lg:flex-1"
               type="text"
